@@ -15,8 +15,7 @@ def torch_default_param_init_fn_(module: nn.Module, verbose: int=0, **kwargs):
         module.reset_parameters()
 
 def fused_init_helper_(module: nn.Module, init_fn_):
-    _fused = getattr(module, '_fused', None)
-    if _fused is None:
+    if (_fused := getattr(module, '_fused', None)) is None:
         raise RuntimeError(f'Internal logic error')
     (dim, splits) = _fused
     splits = (0, *splits, module.weight.size(dim))
@@ -29,8 +28,7 @@ def generic_param_init_fn_(module: nn.Module, init_fn_, n_layers: int, d_model: 
     del kwargs
     if verbose > 1:
         warnings.warn(f'If model has bias parameters they are initialized to 0.')
-    init_div_is_residual = init_div_is_residual
-    if init_div_is_residual is False:
+    if (init_div_is_residual := init_div_is_residual) is False:
         div_is_residual = 1.0
     elif init_div_is_residual is True:
         div_is_residual = math.sqrt(2 * n_layers)
