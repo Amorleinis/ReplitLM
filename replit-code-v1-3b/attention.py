@@ -65,7 +65,7 @@ def flash_attn_fn(query, key, value, n_heads, softmax_scale=None, attn_bias=None
         raise RuntimeError('Please install flash-attn==1.0.3.post0')
     check_valid_inputs(query, key, value)
     if attn_bias is not None:
-        raise NotImplementedError(f'attn_bias not implemented for flash attn.')
+        raise NotImplementedError('attn_bias not implemented for flash attn.')
     (batch_size, seqlen) = query.shape[:2]
     if key_padding_mask is None:
         key_padding_mask = torch.ones_like(key[:, :, 0], dtype=torch.bool)
@@ -92,9 +92,9 @@ def triton_flash_attn_fn(query, key, value, n_heads, softmax_scale=None, attn_bi
         raise RuntimeError('Please install flash-attn==1.0.3.post0 and triton==2.0.0.dev20221202')
     check_valid_inputs(query, key, value)
     if dropout_p:
-        raise NotImplementedError(f'Dropout not implemented for attn_impl: triton.')
+        raise NotImplementedError('Dropout not implemented for attn_impl: triton.')
     if needs_weights:
-        raise NotImplementedError(f'attn_impl: triton cannot return attn weights.')
+        raise NotImplementedError('attn_impl: triton cannot return attn weights.')
     if key_padding_mask is not None:
         warnings.warn('Propagating key_padding_mask to the attention module ' + 'and applying it within the attention module can cause ' + 'unnecessary computation/memory usage. Consider integrating ' + 'into attn_bias once and passing that to each attention ' + 'module instead.')
         (b_size, s_k) = key_padding_mask.shape[:2]

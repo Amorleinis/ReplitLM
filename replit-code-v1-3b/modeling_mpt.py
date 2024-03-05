@@ -158,7 +158,7 @@ class MPTModel(MPTPreTrainedModel):
             past_position = 0
             if past_key_values is not None:
                 if len(past_key_values) != self.config.n_layers:
-                    raise ValueError(f'past_key_values must provide a past_key_value for each attention ' + f'layer in the network (len(past_key_values)={len(past_key_values)!r}; self.config.n_layers={self.config.n_layers!r}).')
+                    raise ValueError('past_key_values must provide a past_key_value for each attention ' + f'layer in the network (len(past_key_values)={len(past_key_values)!r}; self.config.n_layers={self.config.n_layers!r}).')
                 past_position = past_key_values[0][0].size(1)
             if S + past_position > self.config.max_seq_len:
                 raise ValueError(f'Cannot forward input with past sequence length {past_position} and current sequence length {S + 1}, this model only supports total sequence length <= {self.config.max_seq_len}.')
