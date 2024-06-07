@@ -34,7 +34,7 @@ def generic_param_init_fn_(module: nn.Module, init_fn_, n_layers: int, d_model: 
         div_is_residual = 1.0
     elif init_div_is_residual is True:
         div_is_residual = math.sqrt(2 * n_layers)
-    elif isinstance(init_div_is_residual, float) or isinstance(init_div_is_residual, int):
+    elif isinstance(init_div_is_residual, (float, int)):
         div_is_residual = init_div_is_residual
     elif isinstance(init_div_is_residual, str) and init_div_is_residual.isnumeric():
         div_is_residual = float(init_div_is_residual)
